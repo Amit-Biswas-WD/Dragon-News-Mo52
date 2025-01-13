@@ -1,10 +1,11 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 
 const Login = () => {
   const { setUser, userLogin } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [error, serError] = useState({});
   const location = useLocation();
   console.log(location);
 
@@ -20,8 +21,8 @@ const Login = () => {
         setUser(result.user);
         navigate(location?.state ? location?.state : "/");
       })
-      .catch((error) => {
-        console.log("Error", error);
+      .catch((err) => {
+        serError({ ...error, login: err.code });
       });
   };
 
@@ -59,6 +60,11 @@ const Login = () => {
               required
             />
           </div>
+          {error.login && (
+            <label className="flex items-center space-x-2 mt-3 text-red-500 font-medium">
+              {error.login}
+            </label>
+          )}
           <div className="form-control mt-6">
             <button className="btn btn-primary">Login</button>
           </div>

@@ -1,21 +1,28 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 
 const Register = () => {
-  const { createUser } = useContext(AuthContext);
+  const { createUser, setUser } = useContext(AuthContext);
+  const [error, setError] = useState({});
 
   const handleRegister = (event) => {
     event.preventDefault();
 
     const form = new FormData(event.target);
-    const name = form.get("name");
+    const name = form.get("name"); 
     const photo = form.get("photo");
     const email = form.get("email");
     const password = form.get("password");
     console.log({ name, photo, email, password });
 
+    if (name.length < 6) {
+      setError({ ...error, name: "Must be more then 6 character long" });
+      return;
+    }  
+
     createUser(email, password)
       .then((result) => {
+        setUser(result.user);
         console.log(result.user);
       })
       .catch((error) => {
@@ -45,6 +52,9 @@ const Register = () => {
               required
             />
           </div>
+          {error.name && (
+            <label className="label text-red-500 text-xs">{error.name}</label>
+          )}
           <div className="form-control">
             <label className="label">
               <span className="label-text text-xl font-semibold">
