@@ -2,9 +2,11 @@ import { createContext, useEffect, useState } from "react";
 import auth from "./../firebase/firebase.config";
 import {
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
+
 import { toast } from "react-toastify";
 
 export const AuthContext = createContext(null);
@@ -15,6 +17,10 @@ const AuthProvider = ({ children }) => {
 
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
+  };
+
+  const userLogin = (email, password) => {
+    return signInWithEmailAndPassword(auth, email, password);
   };
 
   const logOut = () => {
@@ -40,6 +46,7 @@ const AuthProvider = ({ children }) => {
     user,
     setUser,
     logOut,
+    userLogin,
     createUser,
   };
   return (

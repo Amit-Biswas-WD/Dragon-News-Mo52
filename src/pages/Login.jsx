@@ -1,13 +1,24 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../provider/AuthProvider";
 
 const Login = () => {
+  const { setUser, userLogin } = useContext(AuthContext);
+
   const handleLogin = (event) => {
     event.preventDefault();
-    const form = new FormData(event.target)
-    const email = form.get("email")
-    const password = form.get("password")
+    const form = new FormData(event.target);
+    const email = form.get("email");
+    const password = form.get("password");
+    console.log({ email, password });
 
-    console.log({email, password});
+    userLogin(email, password)
+      .then((result) => {
+        setUser(result.user);
+      })
+      .catch((error) => {
+        console.log("Error", error);
+      });
   };
 
   return (
@@ -26,6 +37,7 @@ const Login = () => {
             </label>
             <input
               type="email"
+              name="email"
               placeholder="Enter your email address"
               className="input input-bordered"
               required
@@ -37,6 +49,7 @@ const Login = () => {
             </label>
             <input
               type="password"
+              name="password"
               placeholder="Enter your password"
               className="input input-bordered"
               required
