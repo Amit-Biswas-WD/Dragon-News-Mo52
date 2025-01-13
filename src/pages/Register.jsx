@@ -1,15 +1,21 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../provider/AuthProvider";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { FaEyeSlash } from "react-icons/fa";
+import { IoIosEye } from "react-icons/io";
 
 const Register = () => {
-  const { createUser, setUser } = useContext(AuthContext);
+  const { createUser, setUser, profileUpdate } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [error, setError] = useState({});
+  const [showPass, setShowPass] = useState(false);
 
   const handleRegister = (event) => {
     event.preventDefault();
 
     const form = new FormData(event.target);
-    const name = form.get("name"); 
+    const name = form.get("name");
     const photo = form.get("photo");
     const email = form.get("email");
     const password = form.get("password");
@@ -18,12 +24,19 @@ const Register = () => {
     if (name.length < 6) {
       setError({ ...error, name: "Must be more then 6 character long" });
       return;
-    }  
+    }
 
     createUser(email, password)
       .then((result) => {
         setUser(result.user);
-        console.log(result.user);
+        profileUpdate({ displayName: name, photoURL: photo })
+          .then(() => {
+            toast("Profile updated!");
+            navigate("/");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch((error) => {
         console.log("Error", error);
@@ -81,18 +94,25 @@ const Register = () => {
               required
             />
           </div>
-          <div className="form-control">
+          <div className="form-control relative">
             <label className="label">
               <span className="label-text text-xl font-semibold">Password</span>
             </label>
             <input
-              type="password"
+              type={showPass ? "password" : "text"}
               name="password"
               placeholder="Enter your password"
               className="input input-bordered"
               required
             />
+            <p
+              onClick={() => setShowPass(!showPass)}
+              className="btn btn-xs absolute top-14 right-4"
+            >
+              {showPass ? <FaEyeSlash /> : <IoIosEye />}
+            </p>
           </div>
+
           <label className="flex items-center space-x-2 mt-3">
             <input
               type="checkbox"

@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 
 import { toast } from "react-toastify";
@@ -37,6 +38,10 @@ const AuthProvider = ({ children }) => {
       });
   };
 
+  const profileUpdate = (updateData) => {
+    return updateProfile(auth.currentUser, updateData);
+  };
+
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -54,6 +59,7 @@ const AuthProvider = ({ children }) => {
     userLogin,
     createUser,
     loading,
+    profileUpdate,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
