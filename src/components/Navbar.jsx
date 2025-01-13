@@ -16,7 +16,20 @@ const Navbar = () => {
       </div>
       <div className="login flex gap-2 items-center">
         <div className=" ">
-          <img src={userIcon} alt="" />
+          {user && user?.email ? (
+            <div className="relative group">
+              <img
+                className="w-16 h-16 rounded-full"
+                src={user.photoURL}
+                alt={user?.displayName || "User"}
+              />
+              <p className="absolute left-0 right-0 bottom-[-40px] text-center text-sm bg-gray-800 text-white py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                {user?.displayName}
+              </p>
+            </div>
+          ) : (
+            <img src={userIcon} alt="" />
+          )}
         </div>
         {user && user?.email ? (
           <button onClick={logOut} className="btn btn-neutral rounded-none">

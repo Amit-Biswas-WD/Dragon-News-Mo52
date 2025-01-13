@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { FaEyeSlash } from "react-icons/fa";
 import { IoIosEye } from "react-icons/io";
 
@@ -31,7 +30,7 @@ const Register = () => {
         setUser(result.user);
         profileUpdate({ displayName: name, photoURL: photo })
           .then(() => {
-            toast("Profile updated!");
+            console.log("Profile updated!");
             navigate("/");
           })
           .catch((error) => {
