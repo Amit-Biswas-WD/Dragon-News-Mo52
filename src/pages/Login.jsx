@@ -1,11 +1,14 @@
 import { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
+import { FaEyeSlash } from "react-icons/fa";
+import { IoIosEye } from "react-icons/io";
 
 const Login = () => {
   const { setUser, userLogin } = useContext(AuthContext);
   const navigate = useNavigate();
   const [error, serError] = useState({});
+  const [showPass, setShowPass] = useState();
   const location = useLocation();
   console.log(location);
 
@@ -48,17 +51,18 @@ const Login = () => {
               required
             />
           </div>
-          <div className="form-control">
+          <div className="form-control relative">
             <label className="label">
               <span className="label-text text-xl font-semibold">Password</span>
             </label>
             <input
-              type="password"
+              type={showPass ? "password" : "text"}
               name="password"
               placeholder="Enter your password"
               className="input input-bordered"
               required
             />
+            <p onClick={() => setShowPass(!showPass)} className="absolute btn btn-xs top-14 right-4">{showPass ? <FaEyeSlash /> : <IoIosEye />}</p>
           </div>
           {error.login && (
             <label className="flex items-center space-x-2 mt-3 text-red-500 font-medium">
