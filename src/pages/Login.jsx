@@ -10,14 +10,14 @@ const Login = () => {
   const [error, serError] = useState({});
   const [showPass, setShowPass] = useState();
   const location = useLocation();
-  console.log(location);
+  // console.log(location);
 
   const handleLogin = (event) => {
     event.preventDefault();
     const form = new FormData(event.target);
     const email = form.get("email");
     const password = form.get("password");
-    console.log({ email, password });
+    // console.log({ email, password });
 
     userLogin(email, password)
       .then((result) => {

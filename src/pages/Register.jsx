@@ -18,7 +18,7 @@ const Register = () => {
     const photo = form.get("photo");
     const email = form.get("email");
     const password = form.get("password");
-    console.log({ name, photo, email, password });
+    // console.log({ name, photo, email, password });
 
     if (name.length < 6) {
       setError({ ...error, name: "Must be more then 6 character long" });
@@ -30,15 +30,15 @@ const Register = () => {
         setUser(result.user);
         profileUpdate({ displayName: name, photoURL: photo })
           .then(() => {
-            console.log("Profile updated!");
+            // console.log("Profile updated!");
             navigate("/");
           })
           .catch((error) => {
-            console.log(error);
+            // console.log(error);
           });
       })
       .catch((error) => {
-        console.log("Error", error);
+        // console.log("Error", error);
       });
   };
 

@@ -7,7 +7,7 @@ const NewsDetails = () => {
   const data = useLoaderData();
   //   console.log(data.data[0]);
   const news = data.data[0];
-  console.log(news);
+  // console.log(news);
 
   return (
     <div>

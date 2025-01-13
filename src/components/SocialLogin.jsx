@@ -11,17 +11,17 @@ const SocialLogin = () => {
         setUser(result.user);
       })
       .catch((error) => {
-        console.log("Error", error);
+        // console.log("Error", error);
       });
   };
 
   const handleGithubLogin = () => {
     createGithubProvider()
       .then((result) => {
-        console.log(result.user);
+        // console.log(result.user);
       })
       .catch((error) => {
-        console.log("Error", error);
+        // console.log("Error", error);
       });
   };
 
