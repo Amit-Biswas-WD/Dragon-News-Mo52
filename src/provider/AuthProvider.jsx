@@ -8,6 +8,7 @@ import {
   updateProfile,
   GoogleAuthProvider,
   signInWithPopup,
+  GithubAuthProvider,
 } from "firebase/auth";
 
 import { toast } from "react-toastify";
@@ -16,6 +17,8 @@ export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
   const googleProvider = new GoogleAuthProvider();
+  const githubProvider = new GithubAuthProvider();
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   console.log(loading, user);
@@ -31,7 +34,13 @@ const AuthProvider = ({ children }) => {
   };
 
   const googleLogin = () => {
+    setLoading(true);
     return signInWithPopup(auth, googleProvider);
+  };
+
+  const createGithubProvider = () => {
+    setLoading(true);
+    return signInWithPopup(auth, githubProvider);
   };
 
   const logOut = () => {
@@ -68,6 +77,7 @@ const AuthProvider = ({ children }) => {
     loading,
     profileUpdate,
     googleLogin,
+    createGithubProvider,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

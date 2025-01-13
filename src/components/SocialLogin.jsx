@@ -2,10 +2,21 @@ import { useContext } from "react";
 import { FaGithub, FaGoogle } from "react-icons/fa6";
 import { AuthContext } from "../provider/AuthProvider";
 const SocialLogin = () => {
-  const { googleLogin } = useContext(AuthContext);
+  const { googleLogin, setUser, createGithubProvider } =
+    useContext(AuthContext);
 
   const handleGoogleLogin = () => {
     googleLogin()
+      .then((result) => {
+        setUser(result.user);
+      })
+      .catch((error) => {
+        console.log("Error", error);
+      });
+  };
+
+  const handleGithubLogin = () => {
+    createGithubProvider()
       .then((result) => {
         console.log(result.user);
       })
@@ -21,8 +32,8 @@ const SocialLogin = () => {
         <button onClick={handleGoogleLogin} className="btn ">
           <FaGoogle></FaGoogle> Login with Google
         </button>
-        <button className="btn ">
-          <FaGithub></FaGithub> Login with Github
+        <button onClick={handleGithubLogin} className="btn">
+          <FaGithub /> Login with GitHub
         </button>
       </div>
     </div>
