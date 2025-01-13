@@ -8,9 +8,8 @@ const Navbar = () => {
 
   return (
     <div className="flex justify-between items-center">
-      <div className=""></div>
+      <div className="">{user && user.email}</div>
       <div className="nav space-x-5">
-        <Link to="">{user && user.name}</Link>
         <Link to="/">Home</Link>
         <Link to="/career">Career</Link>
         <Link to="/about">About</Link>

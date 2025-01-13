@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 const Login = () => {
   const handleLogin = (event) => {
     event.preventDefault();
-    const email = event.target.email.value;
-    const password = event.target.password.value;
+    const form = new FormData(event.target)
+    const email = form.get("email")
+    const password = form.get("password")
 
-    console.log(email, password);
+    console.log({email, password});
   };
 
   return (

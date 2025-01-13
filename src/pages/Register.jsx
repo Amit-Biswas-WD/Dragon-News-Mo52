@@ -1,13 +1,28 @@
+import { useContext } from "react";
+import { AuthContext } from "../provider/AuthProvider";
+
 const Register = () => {
+  const { createUser } = useContext(AuthContext);
+
   const handleRegister = (event) => {
     event.preventDefault();
-    const name = event.target.name.value;
-    const photo = event.target.photo.value;
-    const email = event.target.email.value;
-    const password = event.target.password.value;
 
-    console.log(name, photo, email, password);
+    const form = new FormData(event.target);
+    const name = form.get("name");
+    const photo = form.get("photo");
+    const email = form.get("email");
+    const password = form.get("password");
+    console.log({ name, photo, email, password });
+
+    createUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.log("Error", error);
+      });
   };
+
   return (
     <div className="min-h-screen flex justify-center items-center">
       <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
@@ -77,7 +92,7 @@ const Register = () => {
             <span>Accept Term & Conditions</span>
           </label>
           <div className="form-control mt-6">
-            <button className="btn btn-primary">Login</button>
+            <button className="btn btn-primary">Register</button>
           </div>
         </form>
       </div>
